@@ -1,14 +1,14 @@
 from pydantic import BaseModel
 from typing import Optional
-
+from ..utils.password import generete_password
 class RegisterStudent(BaseModel):
     first_name:str
     last_name:str
     middle_name:str
     nationality:str
     age:int
-    class_year:int
-    school:Optional[str]
-    admission:str="Undergraduate Full time"
+    class_year:int  
+    school:Optional[str]="Pre school"
+    admission:Optional[str]="Undergraduate Full time"
     department:str
 

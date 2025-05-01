@@ -2,8 +2,9 @@ from logging.config import fileConfig
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
-
+from student.models import students
 from alembic import context
+from student.config import setting
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
@@ -14,11 +15,14 @@ config = context.config
 if config.config_file_name is not None:
     fileConfig(config.config_file_name)
 
+config.set_main_option(
+    "sqlalchemy.url",f"postgresql://{setting.database_username}:{setting.database_password}@ep-divine-cloud-a4oihvs8-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+)
 # add your model's MetaData object here
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-target_metadata = None
+target_metadata = students.Base.metadata
 
 # other values from the config, defined by the needs of env.py,
 # can be acquired:
