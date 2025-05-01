@@ -1,5 +1,5 @@
 from fastapi import APIRouter,status
-from schemas.students import RegisterStudent
+from ..schemas.students import RegisterStudent
 router = APIRouter(
     prefix="/students"
 )
