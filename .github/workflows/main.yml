@@ -1,0 +1,38 @@
+name: Deploy FastAPI App
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          # If you have any tests, add the command to run them here
+          echo "Running tests"
+
+      - name: Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY  }}
+        run: |
+          curl -X POST "https://api.render.com/v1/services/srv-d09nn98gjchc739c0qr0/deploys" \
+               -H "Authorization: Bearer $RENDER_API_KEY" \
+               -H "Content-Type: application/json" \
+               -d '{}'
