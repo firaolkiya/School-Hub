@@ -11,30 +11,30 @@ router = APIRouter(
     prefix="/students"
 )
 
-def generate_user_id(db:Session=Depends(get_db)):
-    yt = date.today().year-200
-    cur_studs = db.query(students.Student).filter(students.Student.id.endswith(str(yt)))
-    m_id = len(cur_studs)+1000 if cur_studs  else 1000
-    return f"UGR/{m_id}/{yt}"
-    
 @router.get("/")
 def get_all_students(db:Session=Depends(get_db)):
     studens = db.query(students.Student).all()
     return studens
 
-@router.post("/",status_code=status.HTTP_201_CREATED)
+@router.post("/signup",status_code=status.HTTP_201_CREATED)
 def register_student(student:RegisterStudent,db:Session=Depends(get_db)):
     # generate user id
     yt = date.today().year-2000
     cur_studs = db.query(students.Student).filter(students.Student.id.endswith(str(yt))).all()
     m_id = len(cur_studs)+1000 if cur_studs  else 1000
     stud_id= f"UGR/{m_id}/{yt}"
+    
+    # hash password
     plain_password = generete_password(student.first_name)
     password = hash_password(plain_password)
-    db_student = students.Student(**student.dict(),id=stud_id,password=password)
+    db_student = students.Student(**student.model_dump(),id=stud_id,password=password)
     db.add(db_student)
     db.commit()
     db.refresh(db_student)
     db_student.password = plain_password
     return db_student
-    
+
+
+@router.post('/login')
+def login():
+    return {"message":"logged in"}

@@ -5,6 +5,7 @@ from datetime import datetime
 class Student(Base):
     __tablename__ = "student"
     id = Column(String,primary_key=True)
+    email = Column(String,nullable=False,unique=True)
     first_name = Column(String,nullable=False)
     last_name = Column(String,nullable=False)
     middle_name = Column(String,nullable=False)

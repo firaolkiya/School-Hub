@@ -1,0 +1,23 @@
+
+services:
+  api: 
+    build: .
+    depends_on:
+      - postgress
+    ports:
+      - 1000:1000
+    env_file:
+      - ./.env
+    
+    volumes:
+      - ./:/usr/src/
+    command: ["uvicorn", "app.main:app","--host","0.0.0.0","--port","1000","--reload"]
+  postgress:
+    image: postgres
+    env_file:
+      - ./.env
+    volumes:
+      - postgress-db:/var/lib/postgresql/data
+volumes:
+  postgress-db:
+      
