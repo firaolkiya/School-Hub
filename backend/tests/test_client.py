@@ -19,7 +19,7 @@ def test_student_signup(client):
             "nationality":"Eth",
             "age":0,
             "class_year":0,  
-            "department":"SE" 
+            "department":"SEn" 
          }
     )
     
