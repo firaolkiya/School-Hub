@@ -1,7 +1,9 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker,declarative_base
 from ..config import setting
-DATABASE_URL=f"postgresql://{setting.database_username}:{setting.database_password}@ep-divine-cloud-a4oihvs8-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+
+
+DATABASE_URL=f"postgresql://{setting.database_username}:{setting.database_password}@ep-divine-cloud-a4oihvs8-pooler.us-east-1.aws.neon.tech/{setting.database_name}?sslmode=require"
 
 engine=create_engine(DATABASE_URL)
 

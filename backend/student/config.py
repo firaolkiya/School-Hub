@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     algorithm:str
     access_token_expire_minutes:int
     database_name:str
+    postgres_password:str
     
 
 setting = Settings()

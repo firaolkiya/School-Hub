@@ -1,6 +1,6 @@
 from pydantic import BaseModel,EmailStr
 from typing import Optional
-from ..utils.password import generete_password
+
 class RegisterStudent(BaseModel):
     first_name:str
     email:EmailStr
@@ -13,3 +13,11 @@ class RegisterStudent(BaseModel):
     admission:Optional[str]="Undergraduate Full time"
     department:str
 
+
+class LoginSchema(BaseModel):
+    username:str
+    password:str
+
+class Token(BaseModel):
+    token_type:str
+    access_token:str
