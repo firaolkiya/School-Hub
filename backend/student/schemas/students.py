@@ -13,6 +13,9 @@ class RegisterStudent(BaseModel):
     admission:Optional[str]="Undergraduate Full time"
     department:str
 
+class StudentOut(RegisterStudent):
+    id:str
+
 
 class LoginSchema(BaseModel):
     username:str

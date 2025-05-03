@@ -72,7 +72,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     )
     
 
-@router.get("/me")
+@router.get("/me",response_model=schema.StudentOut)
 def user_info(username:Annotated[model.Student,Depends(get_current_user)],db:Session=Depends(get_db)):
     user =  db.query(model.Student).filter(model.Student.id==username)
     if not user.first():
