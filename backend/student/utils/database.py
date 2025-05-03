@@ -21,4 +21,5 @@ async def get_db():
         db=  SessionLocal()
         yield db
     finally:
+        
         db.close()
