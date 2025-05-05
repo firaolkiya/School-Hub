@@ -1,7 +1,6 @@
-from sqlalchemy import String,Integer,Column,text,TIMESTAMP,Double
-from ..utils.database import Base
-import uuid
-from datetime import datetime
+from sqlalchemy import String,Integer,Column,text,TIMESTAMP,Double,ForeignKey
+from .enrollment import Base
+
 class Student(Base):
     __tablename__ = "student"
     id = Column(String,primary_key=True)
@@ -19,3 +18,6 @@ class Student(Base):
     gpa = Column(Double,nullable=False,server_default=text('0.0'))
     profile_url = Column(String, nullable=True)
     password = Column(String, nullable=False)
+    section_id = Column(Integer,ForeignKey('section.id',ondelete="SET NULL"))
+    
+    

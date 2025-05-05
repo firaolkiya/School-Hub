@@ -21,6 +21,7 @@ from ..utils.password import (
 
 
 router = APIRouter(
+    tags=["Authentication"],
     prefix="/students"
 )
 
@@ -57,7 +58,7 @@ def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()],
     
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail={"message":"Incorrect email or passwor"})
+                            detail={"message":"Incorrect email or password"})
     
     if not verify_password(form_data.password,user.password):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
