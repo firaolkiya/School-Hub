@@ -13,7 +13,7 @@ class Student(Base):
     age = Column(Integer,nullable=False)
     current_accedemic_year =   Column(Integer,server_default=text("1"))
     current_accedemic_semister =   Column(Integer,server_default=text("1"))
-    status =   Column(Integer,server_default="Active")
+    status =   Column(String,server_default="Active")
     school = Column(String,nullable=False)
     admission = Column(String,nullable=False)
     department = Column(String,nullable=False)

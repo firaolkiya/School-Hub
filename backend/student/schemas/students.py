@@ -1,6 +1,8 @@
 from pydantic import BaseModel,EmailStr
 from typing import Optional
 
+from sqlalchemy import null
+
 class RegisterStudent(BaseModel):
     first_name:str
     email:EmailStr
@@ -16,8 +18,8 @@ class RegisterStudent(BaseModel):
 
 class StudentOut(RegisterStudent):
     id:str
-    sttus:int
-    profile_url:str
+    status:str
+    profile_url:Optional[str]=null
 
 
 class LoginSchema(BaseModel):

@@ -83,3 +83,7 @@ def get_assessment_for_course(stud_id:str,course_id:int,db:Session=Depends(get_d
     return assessment
 
 
+@router.post('/complaints')
+def complain_course(stud_id:str,course_id:int,db:Session=Depends(get_db)):
+    pass
+
