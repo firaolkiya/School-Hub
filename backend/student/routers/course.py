@@ -7,7 +7,7 @@ from ..schemas import course as schema
 router = APIRouter(
     prefix='/courses',
     tags=['Courses']
-)
+)   
 
 
 @router.post('/',response_model=schema.CourseOut,status_code=status.HTTP_201_CREATED)
@@ -66,4 +66,4 @@ def get_all_courses(db:Session=Depends(get_db)):
     
     courses = db.query(model.Course).all()
     return courses
-    
+

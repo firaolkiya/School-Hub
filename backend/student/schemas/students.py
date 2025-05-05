@@ -8,13 +8,16 @@ class RegisterStudent(BaseModel):
     middle_name:str
     nationality:str
     age:int
-    class_year:int  
+    current_accedemic_year:int  
     school:Optional[str]="Pre school"
     admission:Optional[str]="Undergraduate Full time"
     department:str
+    current_accedemic_semister:int
 
 class StudentOut(RegisterStudent):
     id:str
+    sttus:int
+    profile_url:str
 
 
 class LoginSchema(BaseModel):

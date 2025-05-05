@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: bc61406d4df1
+Revision ID: ad61a8383330
 Revises: 
-Create Date: 2025-05-04 21:15:53.664112
+Create Date: 2025-05-05 12:00:50.369773
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'bc61406d4df1'
+revision: str = 'ad61a8383330'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,7 +26,9 @@ def upgrade() -> None:
     sa.Column('code', sa.String(), nullable=False),
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),
     sa.Column('credit_hour', sa.Integer(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('code')
     )
     op.create_index(op.f('ix_courses_id'), 'courses', ['id'], unique=True)
     op.create_table('section',
@@ -36,7 +38,8 @@ def upgrade() -> None:
     sa.Column('created_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.TIMESTAMP(), server_default=sa.text('now()'), nullable=True),
     sa.PrimaryKeyConstraint('id', 'name'),
-    sa.UniqueConstraint('id')
+    sa.UniqueConstraint('id'),
+    sa.UniqueConstraint('name')
     )
     op.create_table('chat',
     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False),

@@ -1,5 +1,5 @@
 from sqlalchemy import String,Integer,ForeignKey,Column,text,TIMESTAMP
-from .score import Base
+from .assessment import Base
 class Section(Base):
     __tablename__="section"
     id=Column(Integer,primary_key=True,nullable=False,autoincrement=True,unique=True)

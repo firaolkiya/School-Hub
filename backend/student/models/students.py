@@ -1,5 +1,6 @@
 from sqlalchemy import String,Integer,Column,text,TIMESTAMP,Double,ForeignKey
 from .enrollment import Base
+from sqlalchemy.orm import relationship
 
 class Student(Base):
     __tablename__ = "student"
@@ -10,7 +11,9 @@ class Student(Base):
     middle_name = Column(String,nullable=False)
     nationality = Column(String,nullable=False)
     age = Column(Integer,nullable=False)
-    class_year =   Column(Integer,server_default=text("1"))
+    current_accedemic_year =   Column(Integer,server_default=text("1"))
+    current_accedemic_semister =   Column(Integer,server_default=text("1"))
+    status =   Column(Integer,server_default="Active")
     school = Column(String,nullable=False)
     admission = Column(String,nullable=False)
     department = Column(String,nullable=False)
@@ -19,5 +22,6 @@ class Student(Base):
     profile_url = Column(String, nullable=True)
     password = Column(String, nullable=False)
     section_id = Column(Integer,ForeignKey('section.id',ondelete="SET NULL"))
-    
+    enrolls=relationship("Enrollment", back_populates="student")
+
     
