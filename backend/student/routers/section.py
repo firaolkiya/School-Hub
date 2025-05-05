@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from ..utils.database import get_db
 from ..models import section as model
 from ..schemas import section as schema
+from ..models.chat import Chat
 
 router = APIRouter(
     prefix='/sections',
@@ -18,7 +19,13 @@ def add_section(section:schema.SectionIn,db:Session=Depends(get_db)):
     db.add(new_section)
     db.commit()
     db.refresh(new_section)
-    
+    data = {
+        'name':f"Section {new_section.name}",
+        'section_id':new_section.id
+    }
+    new_chat = Chat(**data)
+    db.add(new_chat)
+    db.commit()
     return new_section
 
 

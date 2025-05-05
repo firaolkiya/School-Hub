@@ -1,4 +1,4 @@
-from fastapi import APIRouter,status,Depends,HTTPException,Header
+from fastapi import APIRouter,status,Depends,HTTPException,Header,File
 from sqlalchemy.orm import Session
 from typing import Annotated
 from fastapi.security import (
@@ -10,6 +10,9 @@ from ..utils.database import get_db
 from ..models import students as model
 from datetime import date
 
+import cloudinary
+import cloudinary.uploader
+from ..utils.functions import validate_image_file
 from ..utils.password import (
                               hash_password,
                               generete_password,
@@ -81,4 +84,34 @@ def user_info(username:Annotated[model.Student,Depends(get_current_user)],db:Ses
             status_code=status.HTTP_404_NOT_FOUND,
             detail="user not found") 
     return user.first()
-   
+
+
+@router.post('/profile')
+async def upload_profile(profile: schema.UpdateProfile, db: Session = Depends(get_db)):
+    student = db.query(model.Student).filter(model.Student.id == profile.stud_id).first()
+    
+    if not student:
+        raise HTTPException(
+            detail="Student not found",
+            status_code=status.HTTP_404_NOT_FOUND
+        )
+
+    if not validate_image_file(profile.file.filename):
+        raise HTTPException(
+            detail="Invalid file type. Only image files are allowed.",
+            status_code=status.HTTP_400_BAD_REQUEST
+        )
+
+    try:
+        response = cloudinary.uploader.upload(file=profile.file)
+    except Exception as e:
+        raise HTTPException(
+            detail=f"Error uploading image: {str(e)}",
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR
+        )
+    
+
+    student.profile_url = response['url'] 
+    db.commit()
+    
+    return student

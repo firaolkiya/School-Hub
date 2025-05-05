@@ -1,5 +1,5 @@
 from sqlalchemy import String,Integer,Column,text,TIMESTAMP,Double,ForeignKey
-from .enrollment import Base
+from .message import Base
 from sqlalchemy.orm import relationship
 
 class Student(Base):

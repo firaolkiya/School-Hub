@@ -1,5 +1,6 @@
-from pydantic import BaseModel,EmailStr
-from typing import Optional
+from fastapi import File,UploadFile
+from pydantic import BaseModel,EmailStr,EncodedBytes
+from typing import Annotated, Optional
 
 from sqlalchemy import null
 
@@ -15,7 +16,9 @@ class RegisterStudent(BaseModel):
     admission:Optional[str]="Undergraduate Full time"
     department:str
     current_accedemic_semister:int
-
+class UpdateProfile(BaseModel):
+    stud_id:str
+    file:Optional[UploadFile]=File(...)
 class StudentOut(RegisterStudent):
     id:str
     status:str
